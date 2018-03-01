@@ -8,18 +8,27 @@ import (
 	"io/ioutil"
 )
 
+var teams = []*model.Team{}
+
 func main() {
 	fmt.Println("Running Soccer Sim")
-
 	sim()
-
 }
 
 func sim() {
-	homeTeam := model.NewTeam("Arsenal")
-	awayTeam := model.NewTeam("Sp*rs")
-	for i := 0; i < 10; i++ {
-		services.SimGame(homeTeam, awayTeam)
+	teams = append(teams, model.NewTeam("Arsenal"))
+	teams = append(teams, model.NewTeam("Totthenham Hotspur"))
+	teams = append(teams, model.NewTeam("Manchester United"))
+	for _, homeTeam := range teams {
+		for _, awayTeam := range teams {
+			if homeTeam == awayTeam {
+				continue
+			}
+			services.SimGame(homeTeam, awayTeam)
+		}
+	}
+	for _, team := range teams {
+		fmt.Println(team)
 	}
 }
 
