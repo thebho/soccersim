@@ -8,3 +8,12 @@ type Team struct {
 	goalsScored  int
 	goalsAllowed int
 }
+
+func NewTeam(teamName string) Team {
+	return Team{
+		name: teamName,
+	}
+}
+func (t Team) Name() string {
+	return t.name
+}
