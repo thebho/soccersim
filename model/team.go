@@ -11,14 +11,6 @@ type Team struct {
 	GoalsAllowed int
 }
 
-// func NewTeamAbv()
-
-func NewTeam(teamName string) *Team {
-	return &Team{
-		Name: teamName,
-	}
-}
-
 // AddResult updates a teams record and Goals
 func (t *Team) AddResult(goalsFor, goalsAgainst int) {
 	t.GoalsScored += goalsFor
