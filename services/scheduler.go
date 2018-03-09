@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/go-pg/pg"
-	rand "github.com/thebho/random-tools"
 )
 
 // Scheduler takes a season name and an slice of teams and returns and stores the season in the database
@@ -60,9 +59,9 @@ func createSchedulerHelperArray(teams []model.Team) map[string]scheduleHelperTea
 }
 
 func scheduleMatchUps(unscheduledMatches []model.Match, teams []model.Team) []model.Match {
-	schedulerHelpers := createSchedulerHelperArray(teams)
+	_ = createSchedulerHelperArray(teams)
 	var scheduledMatches []model.Match
-	rand.RandIndex(count)
+	// rand.RandIndex(count)
 
 	return scheduledMatches
 }
