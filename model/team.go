@@ -1,7 +1,7 @@
 package model
 
+// Team data model
 type Team struct {
-	// tableName    struct{} `sql:"team"`
 	Abv          string `sql:",pk"`
 	Name         string
 	GamesWon     int
