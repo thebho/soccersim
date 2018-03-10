@@ -9,3 +9,12 @@ type Match struct {
 	MatchWeek     int
 	Season        string
 }
+
+func NewMatch(home, away, season string, week int) Match {
+	return Match{
+		HomeTeam:  home,
+		AwayTeam:  away,
+		MatchWeek: week,
+		Season:    season,
+	}
+}

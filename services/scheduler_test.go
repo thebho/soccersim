@@ -3,11 +3,12 @@ package services
 import (
 	"SoccerSim/model"
 	"SoccerSim/util"
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
+
+const testSeasonConstant = "Test Season"
 
 func teamsHelper(numberOfTeams int) []model.Team {
 	teamA := model.Team{Abv: "MockA"}
@@ -20,7 +21,9 @@ func teamsHelper(numberOfTeams int) []model.Team {
 func TestScheduleSeason(t *testing.T) {
 	mockTeams := util.GetTestTeams()
 	scheduler := SchedulerImp{}
-	scheduler.ScheduleSeason("Test Season", mockTeams)
+	matchUps := scheduler.ScheduleSeason(testSeasonConstant, mockTeams)
+	assert.Equal(t, 380, len(matchUps))
+	assert.Equal(t, testSeasonConstant, matchUps[0].Season)
 }
 
 func TestCreateMatchUps(t *testing.T) {
@@ -33,22 +36,31 @@ func TestCreateMatchUps(t *testing.T) {
 }
 
 func TestScheduledMatchUps(t *testing.T) {
-	teams := teamsHelper(3)
-	unscheduledMatches := createMatchUps(teams)
-	scheduledMatches := scheduleMatchUps(unscheduledMatches, teams)
+	teams := util.GetTestTeams()
+	matchups := scheduleMatchUps(teams, "MockSeasonName")
+	assert.Equal(t, 380, len(matchups))
 	// assert.NotEqual(t, 0, scheduledMatches[0].MatchWeek, "Match 1 has a MatchWeek")
-	fmt.Println(scheduledMatches)
+
+	// matches per team
+	ars := 0
+	for _, match := range matchups {
+		if match.HomeTeam == "ARS" || match.AwayTeam == "ARS" {
+			ars++
+		}
+	}
+	assert.Equal(t, 38, ars)
+
+	// matches per week
+	week10 := 0
+	for _, match := range matchups {
+		if match.MatchWeek == 10 {
+			week10++
+
+		}
+	}
+	assert.Equal(t, 10, week10)
 }
 
-// func TestCreateSchedulerHelperArray(t *testing.T) {
-// 	teams := teamsHelper(2)
-// 	helperArray := createSchedulerHelperArray(teams)
-// 	assert.Equal(t, teams[0].Abv, helperArray[teams[0].Abv].team.Abv, "Team is added to scheduler helper array map")
-// }
-
-func TestCreateMatchUpAlgorithm(t *testing.T) {
-	createMatchUpAlgorithm(3)
-}
 func TestPosition(t *testing.T) {
 	assert.Equal(t, 3, position(3, 0, 20))
 	assert.Equal(t, 4, position(3, 1, 20))

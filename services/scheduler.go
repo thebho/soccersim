@@ -19,13 +19,12 @@ type SchedulerImp struct {
 }
 
 // ScheduleSeason schedules a new season from an slice of teams
-func (s SchedulerImp) ScheduleSeason(seasonName string, teams []model.Team) {
+func (s SchedulerImp) ScheduleSeason(seasonName string, teams []model.Team) []model.Match {
 	// if s.db == nil {
 	// 	s.db = data.ConnectToDB()
 	// }
 	fmt.Printf("Scheduling season: %s\n", seasonName)
-	_ = createMatchUps(teams)
-	fmt.Println("Matches Created")
+	return scheduleMatchUps(teams, seasonName)
 }
 
 func createMatchUps(teams []model.Team) []model.Match {
@@ -43,57 +42,6 @@ func createMatchUps(teams []model.Team) []model.Match {
 		}
 	}
 	return matches
-}
-
-type MatchUpHelper struct {
-	teamA int
-	teamB int
-}
-
-func createNumberOfTeamsSlice(numberOfTeams int) []int {
-	var allTeams = make([]int, numberOfTeams, numberOfTeams)
-	for i := 0; i < numberOfTeams; i++ {
-		allTeams[i] = i
-	}
-	return allTeams
-}
-
-func createMatchUpAlgorithm(numberOfTeams int) {
-	// matchUpMap := make(map[string]bool)
-	// var weeks = make(map[int]MatchUpHelper)
-	for i := 0; i < numberOfTeams/2; i++ {
-		var teamsAvailable = createNumberOfTeamsSlice(numberOfTeams)
-		fmt.Println(teamsAvailable)
-
-	}
-}
-
-// func createMatchUpMatrix(numberOfTeams int) {
-// 	teamsSlice := createNumberOfTeamsSlice(numberOfTeams)
-// }
-
-type twoTeams struct {
-	a int
-	b int
-}
-
-// 1  20
-// 2  19
-// 3  18
-// 4  17
-// 5  16
-// 6  15
-// 7  14
-// 8  13
-// 9  12
-// 10 11
-func newTwoTeams(a, b int) twoTeams { return twoTeams{a: a, b: b} }
-
-func position(pos, offset, totalTeams int) int {
-	if pos+offset < totalTeams {
-		return pos + offset
-	}
-	return ((pos + offset) - totalTeams) + 1
 }
 
 func pos(a, b int) int {
@@ -118,10 +66,35 @@ func createTeamMatrix(teams []int) [][]twoTeams {
 	return teamMatrix
 }
 
-func scheduleMatchUps(unscheduledMatches []model.Match, teams []model.Team) []model.Match {
+type twoTeams struct {
+	a int
+	b int
+}
+
+func newTwoTeams(a, b int) twoTeams { return twoTeams{a: a, b: b} }
+
+func position(pos, offset, totalTeams int) int {
+	if pos+offset < totalTeams {
+		return pos + offset
+	}
+	return ((pos + offset) - totalTeams) + 1
+}
+
+func scheduleMatchUps(teams []model.Team, name string) []model.Match {
 	// _ = createSchedulerHelperArray(teams)
 	var scheduledMatches []model.Match
-	intArray := randtools.Array(len(teams))
-	fmt.Printf("Teams array: %v\n", intArray)
+	teamMatrixHalf := createTeamMatrix(randtools.Array(len(teams)))
+	for i, week := range teamMatrixHalf {
+		weekIndex := i + 1
+		for j := (weekIndex % 2); j < 10; j += 2 {
+			scheduledMatches = append(scheduledMatches, model.NewMatch(teams[week[j].a].Abv, teams[week[j].b].Abv, name, weekIndex))
+			scheduledMatches = append(scheduledMatches, model.NewMatch(teams[week[j].b].Abv, teams[week[j].a].Abv, name, weekIndex+19))
+		}
+
+		for j := ((weekIndex + 1) % 2); j < 10; j += 2 {
+			scheduledMatches = append(scheduledMatches, model.NewMatch(teams[week[j].b].Abv, teams[week[j].a].Abv, name, weekIndex))
+			scheduledMatches = append(scheduledMatches, model.NewMatch(teams[week[j].a].Abv, teams[week[j].b].Abv, name, weekIndex+19))
+		}
+	}
 	return scheduledMatches
 }
