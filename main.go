@@ -26,5 +26,8 @@ func loadEnv() {
 func createRouter() {
 	router = mux.NewRouter()
 	router.HandleFunc("/teams", controllers.GetTeams).Methods("GET")
+	router.HandleFunc("/matches", controllers.ScheduleSeason).Methods("POST")
+	router.HandleFunc("/matches", controllers.GetWeeksMatches).Methods("GET")
+
 	log.Fatal(http.ListenAndServe(":8000", router))
 }

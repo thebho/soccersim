@@ -1,7 +1,9 @@
 package services
 
 import (
+	"SoccerSim/data"
 	"SoccerSim/model"
+	"SoccerSim/util"
 	"fmt"
 
 	"github.com/go-pg/pg"
@@ -19,12 +21,31 @@ type SchedulerImp struct {
 }
 
 // ScheduleSeason schedules a new season from an slice of teams
-func (s SchedulerImp) ScheduleSeason(seasonName string, teams []model.Team) []model.Match {
-	// if s.db == nil {
-	// 	s.db = data.ConnectToDB()
-	// }
+func (s SchedulerImp) ScheduleSeason(seasonName string) []model.Match {
+	if s.db == nil {
+		s.db = data.ConnectToDB()
+	}
 	fmt.Printf("Scheduling season: %s\n", seasonName)
-	return scheduleMatchUps(teams, seasonName)
+	teams := s.getTeams()
+	matches := scheduleMatchUps(teams, seasonName)
+	s.insertIntoDB(matches)
+	return matches
+}
+
+func (s SchedulerImp) getTeams() []model.Team {
+	var teams []model.Team
+	err := s.db.Model(&teams).Select()
+	util.CheckError(err)
+	return teams
+}
+
+func (s SchedulerImp) insertIntoDB(matches []model.Match) {
+	var err error
+	for i := range matches {
+		err = s.db.Insert(&matches[i])
+		util.CheckError(err)
+	}
+
 }
 
 func createMatchUps(teams []model.Team) []model.Match {

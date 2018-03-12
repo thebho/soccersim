@@ -2,6 +2,8 @@ package model
 
 //Match data model
 type Match struct {
+	tableName     struct{} `sql:"matches, alias:match"`
+	ID            int
 	HomeTeam      string
 	AwayTeam      string
 	HomeTeamGoals int
