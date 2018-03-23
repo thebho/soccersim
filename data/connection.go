@@ -1,7 +1,6 @@
 package data
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/go-pg/pg"
@@ -16,7 +15,6 @@ func loadEnv() {
 }
 
 func ConnectToDB() *pg.DB {
-	fmt.Println(os.Getenv("APP_DB_USER"))
 	return pg.Connect(&pg.Options{
 		User:     os.Getenv("APP_DB_USER"),
 		Password: os.Getenv("APP_DB_PASS"),
