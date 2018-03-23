@@ -39,3 +39,10 @@ func GetWeeksMatches(w http.ResponseWriter, r *http.Request) {
 	setReturnDefaults(w)
 	json.NewEncoder(w).Encode(matches)
 }
+
+// SimWeeksMatches takes a season and week and sims those matches
+func SimWeeksMatches(w http.ResponseWriter, r *http.Request) {
+	seasonName, err := util.ParseURL("season_name", r.URL.RequestURI())
+	util.CheckError(err)
+	fmt.Println(seasonName)
+}
