@@ -48,3 +48,22 @@ func teamsHelper(numberOfTeams int) []model.Team {
 	teams := []model.Team{teamA, teamB, teamC}
 	return teams[0:numberOfTeams]
 }
+
+type MockMatchWeekDataStore struct{}
+
+var matchSimA = model.NewMatch(teamA.Abv, teamB.Abv, "MOCK", 1)
+
+func (m MockMatchWeekDataStore) GetTeam(teamABV string) model.Team {
+	if teamABV == teamA.Abv {
+		return teamA
+	} else if teamABV == teamB.Abv {
+		return teamB
+	} else {
+		panic(errors.New("Unknown teamABV"))
+	}
+}
+func (m MockMatchWeekDataStore) GetWeeksMatches(season string, week int) []model.Match {
+	return []model.Match{matchSimA}
+}
+
+var mockMatchWeekDataStore = MockMatchWeekDataStore{}

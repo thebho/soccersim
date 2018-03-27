@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// MatchWeekDataStore interface
 type MatchWeekDataStore interface {
 	GetWeeksMatches(string, int) []model.Match
 	GetTeam(string) model.Team
