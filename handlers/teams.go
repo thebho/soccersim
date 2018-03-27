@@ -1,4 +1,4 @@
-package controllers
+package handlers
 
 import (
 	"SoccerSim/model"
@@ -12,12 +12,10 @@ import (
 )
 
 // GetTeams returns all teams from the database
-func GetTeams(w http.ResponseWriter, r *http.Request) {
+func (s SoccerSim) GetTeams(w http.ResponseWriter, r *http.Request) {
 	//TODO: Add logger
 	fmt.Println("Getting all teams")
-	var teams []model.Team
-	err := controller.getDB().Model(&teams).Select()
-	util.CheckError(err)
+	teams := s.db.GetTeams()
 	// writeToFile(teams)
 	setReturnDefaults(w)
 	json.NewEncoder(w).Encode(teams)

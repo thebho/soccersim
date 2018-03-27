@@ -1,7 +1,6 @@
 package services
 
 import (
-	"SoccerSim/model"
 	"SoccerSim/util"
 	"testing"
 
@@ -10,25 +9,11 @@ import (
 
 const testSeasonConstant = "Test Season"
 
-func teamsHelper(numberOfTeams int) []model.Team {
-	teamA := model.Team{Abv: "MockA"}
-	teamB := model.Team{Abv: "MockB"}
-	teamC := model.Team{Abv: "MockC"}
-	teams := []model.Team{teamA, teamB, teamC}
-	return teams[0:numberOfTeams]
+func TestScheduleSeason(t *testing.T) {
+	matchUps := ScheduleSeason(mockSchedulerDataStore, testSeasonConstant)
+	assert.Equal(t, 380, len(matchUps))
+	assert.Equal(t, testSeasonConstant, matchUps[0].Season)
 }
-
-//
-// func TestScheduleSeason(t *testing.T) {
-// 	if testing.Short() {
-// 		t.Skip()
-// 	}
-// 	mockTeams := util.GetTestTeams()
-// 	scheduler := SchedulerImp{}
-// 	matchUps := scheduler.ScheduleSeason(testSeasonConstant)
-// 	assert.Equal(t, 380, len(matchUps))
-// 	assert.Equal(t, testSeasonConstant, matchUps[0].Season)
-// }
 
 func TestCreateMatchUps(t *testing.T) {
 	teams := teamsHelper(2)
@@ -41,9 +26,9 @@ func TestCreateMatchUps(t *testing.T) {
 
 func TestScheduledMatchUps(t *testing.T) {
 	teams := util.GetTestTeams()
-	matchups := scheduleMatchUps(teams, "MockSeasonName")
+	testScheduler := scheduler{mockSchedulerDataStore}
+	matchups := testScheduler.scheduleMatchUps(teams, "MockSeasonName")
 	assert.Equal(t, 380, len(matchups))
-	// assert.NotEqual(t, 0, scheduledMatches[0].MatchWeek, "Match 1 has a MatchWeek")
 
 	// matches per team
 	ars := 0
