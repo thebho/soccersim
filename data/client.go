@@ -48,3 +48,9 @@ func (p PostgresDS) SaveObject(object interface{}) {
 	err := p.db.Insert(object)
 	util.CheckError(err)
 }
+
+// UpdateObject imp
+func (p PostgresDS) UpdateObject(object interface{}) {
+	_, err := p.db.Model(object).UpdateNotNull()
+	util.CheckError(err)
+}

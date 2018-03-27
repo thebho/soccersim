@@ -7,8 +7,9 @@ import (
 
 // MatchWeekDataStore interface
 type MatchWeekDataStore interface {
-	GetWeeksMatches(string, int) []model.Match
+	GetMatches(string, int) []model.Match
 	GetTeam(string) model.Team
+	UpdateObject(interface{})
 }
 
 type simulator struct {
@@ -25,25 +26,23 @@ type simulator struct {
 func SimMatchWeek(dataStore MatchWeekDataStore, season string, matchWeek int) {
 	fmt.Printf("Simming match week: %d in season: %s\n", matchWeek, season)
 	weekSimulator := simulator{dataStore: dataStore}
-	matches := dataStore.GetWeeksMatches(season, matchWeek)
+	matches := dataStore.GetMatches(season, matchWeek)
 	for _, match := range matches {
 		weekSimulator.simMatch(match)
 	}
 }
 
 func (s simulator) simMatch(match model.Match) {
+	if match.Played {
+		fmt.Printf("Skipping previously played match: %d\n", match.ID)
+		return
+	}
 	homeTeam := s.dataStore.GetTeam(match.HomeTeam)
 	awayTeam := s.dataStore.GetTeam(match.AwayTeam)
 
-	/* TODO: Rework sim game to...
-	pull in match and database
-	confirm match hasn't been played already
-	find teams from the DB
-	sim game
-	update match in DB
-	update Teams in DB
-	*/
-	SimGame(&homeTeam, &awayTeam)
-	fmt.Printf("Home Team: %v, Away Team: %v\n", homeTeam, awayTeam)
-
+	SimGame(&homeTeam, &awayTeam, &match)
+	fmt.Println(homeTeam)
+	s.dataStore.UpdateObject(&homeTeam)
+	s.dataStore.UpdateObject(&awayTeam)
+	s.dataStore.UpdateObject(&match)
 }

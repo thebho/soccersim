@@ -15,6 +15,7 @@ type Match struct {
 	AwayTeamGoals int
 	MatchWeek     int
 	Season        string
+	Played        bool
 }
 
 // NewMatch constructor

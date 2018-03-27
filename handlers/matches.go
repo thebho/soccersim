@@ -52,10 +52,7 @@ func (s SoccerSim) SimWeeksMatches(w http.ResponseWriter, r *http.Request) {
 	util.CheckError(err)
 	defer r.Body.Close()
 	if simWeekRequest.Action == "simWeek" {
-		_ = s.db.GetMatches(simWeekRequest.SeasonName, simWeekRequest.Week)
-		// for _, match := range matches {
-		// 	simMatch(match)
-		// }
+		services.SimMatchWeek(s.db, simWeekRequest.SeasonName, simWeekRequest.Week)
 	} else {
 		fmt.Printf("Action: %s unknown\n", simWeekRequest.Action)
 	}
