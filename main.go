@@ -1,40 +1,36 @@
 package main
 
 import (
-	"SoccerSim/controllers"
+	"SoccerSim/handlers"
 	"log"
 	"net/http"
 
+	"SoccerSim/util"
+
 	"github.com/gorilla/mux"
-	"github.com/subosito/gotenv"
 )
 
 var router *mux.Router
+var soccerSim handlers.SoccerSim
 
 func main() {
-	loadEnv()
+	util.LoadEnv()
+	soccerSim = handlers.NewSoccerSim()
 	createRouter()
-}
-
-func loadEnv() {
-	err := gotenv.Load()
-	if err != nil {
-		panic(err)
-	}
 }
 
 func createRouter() {
 	router = mux.NewRouter()
-	router.HandleFunc("/teams", controllers.GetTeams).Methods("GET")
-	router.HandleFunc("/season", controllers.ScheduleSeason).Methods("POST")
+	router.HandleFunc("/teams", soccerSim.GetTeams).Methods("GET")
+	router.HandleFunc("/season", soccerSim.ScheduleSeason).Methods("POST")
 
 	matches := router.PathPrefix("/matches").Subrouter()
 
 	// Get weeks matches
-	matches.HandleFunc("", controllers.GetWeeksMatches).Methods("GET")
+	matches.HandleFunc("", soccerSim.GetWeeksMatches).Methods("GET")
 
 	// Sim match week {seasonName, week, action}
-	matches.HandleFunc("", controllers.SimWeeksMatches).Methods("POST")
+	matches.HandleFunc("", soccerSim.SimWeeksMatches).Methods("POST")
 
 	log.Fatal(http.ListenAndServe(":8000", router))
 }

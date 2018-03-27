@@ -1,49 +1,35 @@
 package services
 
 import (
-	"SoccerSim/data"
 	"SoccerSim/model"
-	"SoccerSim/util"
 	"fmt"
 
-	"github.com/go-pg/pg"
 	randtools "github.com/thebho/random-tools"
 )
 
-// Scheduler takes a season name and an slice of teams and returns and stores the season in the database
-type Scheduler interface {
-	ScheduleSeason(string, []model.Team)
+//SchedulerDataStore interface
+type SchedulerDataStore interface {
+	GetTeams() []model.Team
+	SaveObject(interface{})
 }
 
-// SchedulerImp is an implementation of Scheduler
-type SchedulerImp struct {
-	db *pg.DB
+type scheduler struct {
+	dataStore SchedulerDataStore
 }
 
 // ScheduleSeason schedules a new season from an slice of teams
-func (s SchedulerImp) ScheduleSeason(seasonName string) []model.Match {
-	if s.db == nil {
-		s.db = data.ConnectToDB()
-	}
+func ScheduleSeason(dataStore SchedulerDataStore, seasonName string) []model.Match {
 	fmt.Printf("Scheduling season: %s\n", seasonName)
-	teams := s.getTeams()
-	matches := scheduleMatchUps(teams, seasonName)
-	s.insertIntoDB(matches)
+	schedulerHelper := scheduler{dataStore: dataStore}
+	teams := dataStore.GetTeams()
+	matches := schedulerHelper.scheduleMatchUps(teams, seasonName)
+	schedulerHelper.insertIntoDB(matches)
 	return matches
 }
 
-func (s SchedulerImp) getTeams() []model.Team {
-	var teams []model.Team
-	err := s.db.Model(&teams).Select()
-	util.CheckError(err)
-	return teams
-}
-
-func (s SchedulerImp) insertIntoDB(matches []model.Match) {
-	var err error
+func (s scheduler) insertIntoDB(matches []model.Match) {
 	for i := range matches {
-		err = s.db.Insert(&matches[i])
-		util.CheckError(err)
+		s.dataStore.SaveObject(&matches[i])
 	}
 
 }
@@ -101,7 +87,7 @@ func position(pos, offset, totalTeams int) int {
 	return ((pos + offset) - totalTeams) + 1
 }
 
-func scheduleMatchUps(teams []model.Team, name string) []model.Match {
+func (s scheduler) scheduleMatchUps(teams []model.Team, name string) []model.Match {
 	// _ = createSchedulerHelperArray(teams)
 	var scheduledMatches []model.Match
 	teamMatrixHalf := createTeamMatrix(randtools.Array(len(teams)))

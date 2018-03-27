@@ -1,5 +1,10 @@
 package model
 
+// MatchesDataStore interface
+type MatchesDataStore interface {
+	GetMatches(string, int) []Match //season, week
+}
+
 //Match data model
 type Match struct {
 	tableName     struct{} `sql:"matches, alias:match"`
@@ -12,6 +17,7 @@ type Match struct {
 	Season        string
 }
 
+// NewMatch constructor
 func NewMatch(home, away, season string, week int) Match {
 	return Match{
 		HomeTeam:  home,

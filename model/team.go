@@ -1,5 +1,11 @@
 package model
 
+// TeamDataStore interface
+type TeamDataStore interface {
+	GetTeam(string) Team //teamABV
+	GetTeams() []Team
+}
+
 // Team data model
 type Team struct {
 	Abv          string `sql:",pk"`
@@ -30,19 +36,4 @@ func (t *Team) AddResult(goalsFor, goalsAgainst int) {
 // TotalPoints converts record to league points
 func (t Team) TotalPoints() int {
 	return t.GamesWon*3 + t.GamesDrawn
-}
-
-// GetWins returns number of team wins
-func (t Team) GetWins() int {
-	return t.GamesWon
-}
-
-// GetDraws returns number of team draws
-func (t Team) GetDraws() int {
-	return t.GamesDrawn
-}
-
-// GetLoses returns number of team losses
-func (t Team) GetLoses() int {
-	return t.GamesLost
 }
