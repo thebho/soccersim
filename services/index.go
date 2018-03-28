@@ -2,10 +2,10 @@ package services
 
 import "SoccerSim/model"
 
-// MatchServices interface for match logic
-type MatchServices interface {
-	GetWeeksMatches(model.MatchesDataStore, string, int) []model.Match
-	SimMatchWeek(MatchWeekDataStore, string, int)
+// MatchService interface for match logic
+type MatchService interface {
+	GetWeeksMatches(MatchDataStore, string, int) []model.Match
+	SimMatchWeek(MatchDataStore, string, int)
 	SimGame(model.Team, model.Team, model.Match)
 	ScheduleSeason(SchedulerDataStore, string) []model.Match
 }

@@ -8,19 +8,19 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-type MyMockedObject struct {
+type MockMatchDataStore struct {
 	mock.Mock
 }
 
-func (m *MyMockedObject) GetTeam(teamAbv string) model.Team {
+func (m *MockMatchDataStore) GetTeam(teamAbv string) model.Team {
 	_ = m.Called(teamAbv)
 	return model.Team{Abv: teamAbv}
 }
-func (m *MyMockedObject) GetMatches(season string, matchWeek int) []model.Match {
+func (m *MockMatchDataStore) GetMatches(season string, matchWeek int) []model.Match {
 	_ = m.Called(season, matchWeek)
-	return nil
+	return []model.Match{matchA, matchB}
 }
-func (m *MyMockedObject) UpdateObject(object interface{}) {
+func (m *MockMatchDataStore) UpdateObject(object interface{}) {
 	_ = m.Called(object)
 	return
 }
@@ -68,23 +68,23 @@ func teamsHelper(numberOfTeams int) []model.Team {
 	return teams[0:numberOfTeams]
 }
 
-type MockMatchWeekDataStore struct{}
-
-var matchSimA = model.NewMatch(teamA.Abv, teamB.Abv, "MOCK", 1)
-
-func (m MockMatchWeekDataStore) GetTeam(teamABV string) model.Team {
-	if teamABV == teamA.Abv {
-		return teamA
-	} else if teamABV == teamB.Abv {
-		return teamB
-	} else {
-		panic(errors.New("Unknown teamABV"))
-	}
-}
-func (m MockMatchWeekDataStore) GetMatches(season string, week int) []model.Match {
-	return []model.Match{matchSimA}
-}
-
-func (m MockMatchWeekDataStore) UpdateObject(interface{}) {}
-
-var mockMatchWeekDataStore = MockMatchWeekDataStore{}
+// type MockMatchWeekDataStore struct{}
+//
+// var matchSimA = model.NewMatch(teamA.Abv, teamB.Abv, "MOCK", 1)
+//
+// func (m MockMatchWeekDataStore) GetTeam(teamABV string) model.Team {
+// 	if teamABV == teamA.Abv {
+// 		return teamA
+// 	} else if teamABV == teamB.Abv {
+// 		return teamB
+// 	} else {
+// 		panic(errors.New("Unknown teamABV"))
+// 	}
+// }
+// func (m MockMatchWeekDataStore) GetMatches(season string, week int) []model.Match {
+// 	return []model.Match{matchSimA}
+// }
+//
+// func (m MockMatchWeekDataStore) UpdateObject(interface{}) {}
+//
+// var mockMatchWeekDataStore = MockMatchWeekDataStore{}
