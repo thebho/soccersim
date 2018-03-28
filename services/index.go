@@ -1,19 +1,17 @@
 package services
 
-import (
-	"os"
+import "SoccerSim/model"
 
-	"github.com/go-pg/pg"
-)
+// MatchServices interface for match logic
+type MatchServices interface {
+	GetWeeksMatches(model.MatchesDataStore, string, int) []model.Match
+	SimMatchWeek(MatchWeekDataStore, string, int)
+	SimGame(model.Team, model.Team, model.Match)
+	ScheduleSeason(SchedulerDataStore, string) []model.Match
+}
 
-var db *pg.DB
-
-// InitDB init
-func InitDB() {
-	db = pg.Connect(&pg.Options{
-		User:     os.Getenv("APP_DB_USER"),
-		Password: os.Getenv("APP_DB_PASS"),
-		Addr:     os.Getenv("APP_DB_ADDR"),
-		Database: os.Getenv("APP_DB_NAME"),
-	})
+// TeamService interface for team logic
+type TeamService interface {
+	GetAllTeams() []model.Team
+	GetTeam(string) model.Team
 }

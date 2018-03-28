@@ -2,12 +2,28 @@ package services
 
 import "SoccerSim/model"
 
+// TeamDataStore interface
+type TeamDataStore interface {
+	GetTeam(string) model.Team //teamABV
+	GetTeams() []model.Team
+}
+
+// TeamServiceImp implements TeamServices
+type TeamServiceImp struct {
+	dataStore TeamDataStore
+}
+
+// NewTeamService creates a new TeamService with the provide datastore
+func NewTeamService(dataStore TeamDataStore) TeamServiceImp {
+	return TeamServiceImp{dataStore: dataStore}
+}
+
 // GetAllTeams service
-func GetAllTeams(dataStore model.TeamDataStore) []model.Team {
-	return dataStore.GetTeams()
+func (t TeamServiceImp) GetAllTeams() []model.Team {
+	return t.dataStore.GetTeams()
 }
 
 // GetTeam service
-func GetTeam(dataStore model.TeamDataStore, teamABV string) model.Team {
-	return dataStore.GetTeam(teamABV)
+func (t TeamServiceImp) GetTeam(teamABV string) model.Team {
+	return t.dataStore.GetTeam(teamABV)
 }

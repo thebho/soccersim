@@ -1,11 +1,5 @@
 package model
 
-// TeamDataStore interface
-type TeamDataStore interface {
-	GetTeam(string) Team //teamABV
-	GetTeams() []Team
-}
-
 // Team data model
 type Team struct {
 	Abv          string `sql:",pk"`

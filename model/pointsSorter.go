@@ -1,6 +1,6 @@
 package model
 
-// PointsSorter sorts an array of teams by total poitns
+// PointsSorter sorts an array of teams by total points
 type PointsSorter []*Team
 
 func (a PointsSorter) Len() int           { return len(a) }

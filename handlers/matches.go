@@ -21,16 +21,7 @@ func (s SoccerSim) ScheduleSeason(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(matches)
 }
 
-// func (s SoccerSim) getWeeksMatches(seasonName string, week int) []model.Match {
-// 	var matches []model.Match
-// 	err := s.db.Model(&matches).
-// 		Where("season = ?", seasonName).
-// 		Where("match_week = ?", week).
-// 		Select()
-// 	util.CheckError(err)
-// 	return matches
-// }
-
+// GetWeeksMatches returns matches for the season/week
 func (s SoccerSim) GetWeeksMatches(w http.ResponseWriter, r *http.Request) {
 	seasonName, err := util.ParseURL("season_name", r.URL.RequestURI())
 	util.CheckError(err)
@@ -39,7 +30,7 @@ func (s SoccerSim) GetWeeksMatches(w http.ResponseWriter, r *http.Request) {
 	weekInt, err := strconv.Atoi(week)
 	util.CheckError(err)
 	fmt.Printf("Getting matches for: %s Week: %d\n", seasonName, weekInt)
-	matches := s.db.GetMatches(seasonName, weekInt)
+	matches := services.GetWeeksMatches(s.db, seasonName, weekInt)
 	setReturnDefaults(w)
 	json.NewEncoder(w).Encode(matches)
 }
