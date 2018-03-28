@@ -13,7 +13,9 @@ func TestSimMatchWeekNoPanic(t *testing.T) {
 	mockMDS.On("GetTeam", "ARS").Return(teamA)
 	mockMDS.On("GetTeam", mock.Anything).Return(teamB)
 	mockMDS.On("UpdateObject", mock.Anything)
-	matchService := NewMatchService(mockMDS)
+	mockSimulator := new(MockMatchSimulator)
+	mockSimulator.On("Sim", mock.Anything, mock.Anything, mock.Anything)
+	matchService := NewMatchServiceSimulator(mockMDS, mockSimulator)
 	matchService.SimMatchWeek("MOCK", 1)
 }
 
@@ -36,7 +38,9 @@ func TestSimMatch(t *testing.T) {
 	mockMDS.On("GetTeam", "TeamA").Return(teamA)
 	mockMDS.On("GetTeam", "TeamB").Return(teamB)
 	mockMDS.On("UpdateObject", mock.Anything)
-	matchService := NewMatchService(mockMDS)
+	mockSimulator := new(MockMatchSimulator)
+	mockSimulator.On("Sim", mock.Anything, mock.Anything, mock.Anything)
+	matchService := NewMatchServiceSimulator(mockMDS, mockSimulator)
 
 	matchService.simMatch(match)
 	mockMDS.AssertCalled(t, "GetTeam", "TeamA")

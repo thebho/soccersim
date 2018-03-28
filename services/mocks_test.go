@@ -8,6 +8,9 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
+var matchA = model.NewMatch("ARS", "TOT", "MOCK", 1)
+var matchB = model.NewMatch("WHA", "CHE", "MOCK", 1)
+
 type MockMatchDataStore struct {
 	mock.Mock
 }
@@ -25,8 +28,14 @@ func (m *MockMatchDataStore) UpdateObject(object interface{}) {
 	return
 }
 
-var matchA = model.NewMatch("ARS", "TOT", "MOCK", 1)
-var matchB = model.NewMatch("WHA", "CHE", "MOCK", 1)
+type MockMatchSimulator struct {
+	mock.Mock
+}
+
+func (m *MockMatchSimulator) Sim(homeTeam, awayTeam *model.Team, match *model.Match) {
+	_ = m.Called(homeTeam, awayTeam, match)
+	return
+}
 
 type MockMatchesDataStore struct{}
 

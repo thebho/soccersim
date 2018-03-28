@@ -27,9 +27,7 @@ func (m MatchServiceImp) simMatch(match model.Match) {
 	}
 	homeTeam := m.dataStore.GetTeam(match.HomeTeam)
 	awayTeam := m.dataStore.GetTeam(match.AwayTeam)
-
-	SimGame(&homeTeam, &awayTeam, &match)
-	fmt.Println(homeTeam)
+	m.matchSimulator.Sim(&homeTeam, &awayTeam, &match)
 	m.dataStore.UpdateObject(&homeTeam)
 	m.dataStore.UpdateObject(&awayTeam)
 	m.dataStore.UpdateObject(&match)
