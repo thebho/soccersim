@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/thebho/soccersim.svg?style=svg)](https://circleci.com/gh/thebho/soccersim)
+
 # Soccer Sim
 ### Run
 1. Add a .env file with `APP_DB_USER`, `APP_DB_PASS`, `APP_DB_NAME`, and `APP_DB_ADDR` for a postgres database
