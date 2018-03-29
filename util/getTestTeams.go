@@ -5,7 +5,8 @@ import (
 	"io"
 	"os"
 	"path/filepath"
-	"soccersim/model"
+
+	"github.com/thebho/soccersim/model"
 )
 
 // Unmarshal is a function that unmarshals the data from the

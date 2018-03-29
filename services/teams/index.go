@@ -1,6 +1,6 @@
 package teams
 
-import "soccersim/model"
+import "github.com/thebho/soccersim/model"
 
 // TeamService interface for team logic
 type TeamService interface {

@@ -1,6 +1,6 @@
 package matches
 
-import "soccersim/model"
+import "github.com/thebho/soccersim/model"
 
 // MatchService interface for match logic
 type MatchService interface {

@@ -2,9 +2,10 @@ package handlers
 
 import (
 	"net/http"
-	"soccersim/data"
-	"soccersim/services/matches"
-	"soccersim/services/teams"
+
+	"github.com/thebho/soccersim/data"
+	"github.com/thebho/soccersim/services/matches"
+	"github.com/thebho/soccersim/services/teams"
 )
 
 // SoccerSim struct

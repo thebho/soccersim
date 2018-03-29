@@ -4,11 +4,12 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
-	"soccersim/handlers"
-	"soccersim/model"
-	"soccersim/util"
 	"strings"
 	"testing"
+
+	"github.com/thebho/soccersim/handlers"
+	"github.com/thebho/soccersim/model"
+	"github.com/thebho/soccersim/util"
 
 	"github.com/stretchr/testify/assert"
 )

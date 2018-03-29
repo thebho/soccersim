@@ -3,9 +3,10 @@ package handlers_test
 import (
 	"net/http"
 	"net/http/httptest"
-	"soccersim/handlers"
-	"soccersim/util"
 	"testing"
+
+	"github.com/thebho/soccersim/handlers"
+	"github.com/thebho/soccersim/util"
 )
 
 // GetTeams returns all teams from the database

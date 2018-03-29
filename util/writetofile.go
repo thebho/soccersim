@@ -1,11 +1,12 @@
 package util
 
 import (
-	"soccersim/model"
 	"bytes"
 	"encoding/json"
 	"io"
 	"os"
+
+	"github.com/thebho/soccersim/model"
 )
 
 // WriteToFile for testing

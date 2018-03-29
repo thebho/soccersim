@@ -1,8 +1,9 @@
 package matches
 
 import (
-	"soccersim/model"
 	"testing"
+
+	"github.com/thebho/soccersim/model"
 
 	"github.com/stretchr/testify/mock"
 )

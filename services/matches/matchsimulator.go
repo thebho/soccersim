@@ -2,7 +2,8 @@ package matches
 
 import (
 	"fmt"
-	"soccersim/model"
+
+	"github.com/thebho/soccersim/model"
 )
 
 //SimMatchWeek takes a season and a matchWeek and simulates all the matches that week

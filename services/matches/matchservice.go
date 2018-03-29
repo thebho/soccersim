@@ -1,8 +1,8 @@
 package matches
 
 import (
-	"soccersim/model"
-	"soccersim/simulator"
+	"github.com/thebho/soccersim/model"
+	"github.com/thebho/soccersim/simulator"
 )
 
 // MatchDataStore interface

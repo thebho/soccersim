@@ -1,9 +1,10 @@
 package matches
 
 import (
-	"soccersim/model"
-	"soccersim/util"
 	"testing"
+
+	"github.com/thebho/soccersim/model"
+	"github.com/thebho/soccersim/util"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"

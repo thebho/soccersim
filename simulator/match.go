@@ -1,7 +1,7 @@
 package simulator
 
 import (
-	"soccersim/model"
+	"github.com/thebho/soccersim/model"
 
 	rand "github.com/thebho/random-tools"
 )

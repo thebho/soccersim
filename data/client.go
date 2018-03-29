@@ -1,8 +1,8 @@
 package data
 
 import (
-	"soccersim/model"
-	"soccersim/util"
+	"github.com/thebho/soccersim/model"
+	"github.com/thebho/soccersim/util"
 
 	"github.com/go-pg/pg"
 )

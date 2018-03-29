@@ -4,12 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"soccersim/model"
-	"soccersim/util"
 	"strconv"
+
+	"github.com/thebho/soccersim/model"
+	"github.com/thebho/soccersim/util"
 )
 
-// ScheduleSeason returns all teams from the database
+// ScheduleSeason returns all teams from the sdatabase
 func (s SoccerSim) ScheduleSeason(w http.ResponseWriter, r *http.Request) {
 	//TODO: Add logger
 	fmt.Println("Scheduling Season")

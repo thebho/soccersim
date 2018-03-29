@@ -1,11 +1,12 @@
 package main
 
 import (
-	"soccersim/handlers"
 	"log"
 	"net/http"
 
-	"soccersim/util"
+	"github.com/thebho/soccersim/handlers"
+
+	"github.com/thebho/soccersim/util"
 
 	"github.com/gorilla/mux"
 )

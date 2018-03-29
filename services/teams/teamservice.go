@@ -1,6 +1,6 @@
 package teams
 
-import "soccersim/model"
+import "github.com/thebho/soccersim/model"
 
 // TeamDataStore interface
 type TeamDataStore interface {

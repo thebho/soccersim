@@ -2,7 +2,8 @@ package matches
 
 import (
 	"fmt"
-	"soccersim/model"
+
+	"github.com/thebho/soccersim/model"
 
 	randtools "github.com/thebho/random-tools"
 )
