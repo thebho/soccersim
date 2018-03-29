@@ -27,10 +27,10 @@ func (m *MockMatchDataStore) UpdateObject(object interface{}) {
 	_ = m.Called(object)
 	return
 }
-func (m MockMatchDataStore) GetTeams() []model.Team {
+func (m *MockMatchDataStore) GetTeams() []model.Team {
 	return util.GetTestTeams()
 }
-func (m MockMatchDataStore) SaveObject(object interface{}) {
+func (m *MockMatchDataStore) SaveObject(object interface{}) {
 	_ = m.Called(object)
 	return
 }
@@ -83,24 +83,3 @@ func teamsHelper(numberOfTeams int) []model.Team {
 	teams := []model.Team{teamA, teamB, teamC}
 	return teams[0:numberOfTeams]
 }
-
-// type MockMatchWeekDataStore struct{}
-//
-// var matchSimA = model.NewMatch(teamA.Abv, teamB.Abv, "MOCK", 1)
-//
-// func (m MockMatchWeekDataStore) GetTeam(teamABV string) model.Team {
-// 	if teamABV == teamA.Abv {
-// 		return teamA
-// 	} else if teamABV == teamB.Abv {
-// 		return teamB
-// 	} else {
-// 		panic(errors.New("Unknown teamABV"))
-// 	}
-// }
-// func (m MockMatchWeekDataStore) GetMatches(season string, week int) []model.Match {
-// 	return []model.Match{matchSimA}
-// }
-//
-// func (m MockMatchWeekDataStore) UpdateObject(interface{}) {}
-//
-// var mockMatchWeekDataStore = MockMatchWeekDataStore{}

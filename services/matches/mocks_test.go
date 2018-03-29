@@ -47,26 +47,6 @@ var teamA = model.Team{Name: "MockA", Abv: "MKA"}
 var teamB = model.Team{Name: "MockB", Abv: "MKB"}
 var teamC = model.Team{Name: "MockC", Abv: "MockC"}
 
-// type MockMatchWeekDataStore struct{}
-//
-// var matchSimA = model.NewMatch(teamA.Abv, teamB.Abv, "MOCK", 1)
-//
-// func (m MockMatchWeekDataStore) GetTeam(teamABV string) model.Team {
-// 	if teamABV == teamA.Abv {
-// 		return teamA
-// 	} else if teamABV == teamB.Abv {
-// 		return teamB
-// 	} else {
-// 		panic(errors.New("Unknown teamABV"))
-// 	}
-// }
-// func (m MockMatchWeekDataStore) GetMatches(season string, week int) []model.Match {
-// 	return []model.Match{matchSimA}
-// }
-//
-// func (m MockMatchWeekDataStore) UpdateObject(interface{}) {}
-//
-// var mockMatchWeekDataStore = MockMatchWeekDataStore{}
 func teamsHelper(numberOfTeams int) []model.Team {
 	teams := []model.Team{teamA, teamB, teamC}
 	return teams[0:numberOfTeams]
