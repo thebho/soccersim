@@ -7,14 +7,17 @@ import (
 	"github.com/go-pg/pg"
 )
 
+// PostgresDS implements datastore interfaces
 type PostgresDS struct {
 	db *pg.DB
 }
 
+// NewPostgresDS constructor
 func NewPostgresDS() *PostgresDS {
 	return &PostgresDS{db: ConnectToDB()}
 }
 
+// GetMatches returns the matches from a season/week
 func (p PostgresDS) GetMatches(season string, week int) []model.Match {
 	var matches []model.Match
 	err := p.db.Model(&matches).
