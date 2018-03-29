@@ -1,7 +1,7 @@
-package services
+package matches
 
 import (
-	"SoccerSim/model"
+	"soccersim/model"
 	"testing"
 
 	"github.com/stretchr/testify/mock"
@@ -15,7 +15,8 @@ func TestSimMatchWeekNoPanic(t *testing.T) {
 	mockMDS.On("UpdateObject", mock.Anything)
 	mockSimulator := new(MockMatchSimulator)
 	mockSimulator.On("Sim", mock.Anything, mock.Anything, mock.Anything)
-	matchService := NewMatchServiceSimulator(mockMDS, mockSimulator)
+	matchService := NewMatchService(mockMDS)
+	matchService.matchSimulator = mockSimulator
 	matchService.SimMatchWeek("MOCK", 1)
 }
 
@@ -40,7 +41,8 @@ func TestSimMatch(t *testing.T) {
 	mockMDS.On("UpdateObject", mock.Anything)
 	mockSimulator := new(MockMatchSimulator)
 	mockSimulator.On("Sim", mock.Anything, mock.Anything, mock.Anything)
-	matchService := NewMatchServiceSimulator(mockMDS, mockSimulator)
+	matchService := NewMatchService(mockMDS)
+	matchService.matchSimulator = mockSimulator
 
 	matchService.simMatch(match)
 	mockMDS.AssertCalled(t, "GetTeam", "TeamA")

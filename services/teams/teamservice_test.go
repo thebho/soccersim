@@ -1,4 +1,4 @@
-package services
+package teams
 
 import (
 	"testing"

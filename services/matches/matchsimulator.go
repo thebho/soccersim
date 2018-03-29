@@ -1,8 +1,8 @@
-package services
+package matches
 
 import (
-	"SoccerSim/model"
 	"fmt"
+	"soccersim/model"
 )
 
 //SimMatchWeek takes a season and a matchWeek and simulates all the matches that week

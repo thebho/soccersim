@@ -1,6 +1,6 @@
-package services
+package teams
 
-import "SoccerSim/model"
+import "soccersim/model"
 
 // TeamDataStore interface
 type TeamDataStore interface {

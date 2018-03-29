@@ -1,9 +1,8 @@
-package services
+package matches
 
 import (
-	"SoccerSim/model"
-	"SoccerSim/util"
-	"errors"
+	"soccersim/model"
+	"soccersim/util"
 
 	"github.com/stretchr/testify/mock"
 )
@@ -27,6 +26,13 @@ func (m *MockMatchDataStore) UpdateObject(object interface{}) {
 	_ = m.Called(object)
 	return
 }
+func (m *MockMatchDataStore) GetTeams() []model.Team {
+	return util.GetTestTeams()
+}
+func (m *MockMatchDataStore) SaveObject(object interface{}) {
+	_ = m.Called(object)
+	return
+}
 
 type MockMatchSimulator struct {
 	mock.Mock
@@ -37,45 +43,9 @@ func (m *MockMatchSimulator) Sim(homeTeam, awayTeam *model.Team, match *model.Ma
 	return
 }
 
-type MockMatchesDataStore struct{}
-
-func (m MockMatchesDataStore) GetMatches(season string, week int) []model.Match {
-	return []model.Match{matchA, matchB}
-}
-
-var mockMatchDataStore = MockMatchesDataStore{}
-
 var teamA = model.Team{Name: "MockA", Abv: "MKA"}
 var teamB = model.Team{Name: "MockB", Abv: "MKB"}
 var teamC = model.Team{Name: "MockC", Abv: "MockC"}
-
-type MockTeamDataStore struct{}
-
-func (m MockTeamDataStore) GetTeam(teamABV string) model.Team {
-	if teamABV == teamA.Abv {
-		return teamA
-	}
-	panic(errors.New(""))
-}
-func (m MockTeamDataStore) GetTeams() []model.Team {
-	return []model.Team{teamA, teamB}
-}
-
-var mockTeamDataStore = MockTeamDataStore{}
-
-type MockSchedulerDataStore struct{}
-
-func (m MockSchedulerDataStore) SaveObject(object interface{}) {}
-func (m MockSchedulerDataStore) GetTeams() []model.Team {
-	return util.GetTestTeams()
-}
-
-var mockSchedulerDataStore = MockSchedulerDataStore{}
-
-func teamsHelper(numberOfTeams int) []model.Team {
-	teams := []model.Team{teamA, teamB, teamC}
-	return teams[0:numberOfTeams]
-}
 
 // type MockMatchWeekDataStore struct{}
 //
@@ -97,3 +67,7 @@ func teamsHelper(numberOfTeams int) []model.Team {
 // func (m MockMatchWeekDataStore) UpdateObject(interface{}) {}
 //
 // var mockMatchWeekDataStore = MockMatchWeekDataStore{}
+func teamsHelper(numberOfTeams int) []model.Team {
+	teams := []model.Team{teamA, teamB, teamC}
+	return teams[0:numberOfTeams]
+}

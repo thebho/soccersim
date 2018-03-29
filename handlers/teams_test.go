@@ -1,10 +1,10 @@
 package handlers_test
 
 import (
-	"SoccerSim/services"
-	"SoccerSim/util"
-	"encoding/json"
 	"net/http"
+	"net/http/httptest"
+	"soccersim/handlers"
+	"soccersim/util"
 	"testing"
 )
 
@@ -12,10 +12,16 @@ import (
 func TestGetTeams(t *testing.T) {
 	req, err := http.NewRequest("GET", "/teams", nil)
 	util.TestError(t, err)
-
-	teamService := services.NewTeamService(s.db)
-	teams := teamService.GetAllTeams()
-	// util.WriteToFile(teams)
-	setReturnDefaults(w)
-	json.NewEncoder(w).Encode(teams)
+	mockTS := new(MockTeamService)
+	mockTS.On("GetAllTeams")
+	mockSoccerSim := handlers.NewSoccerSim()
+	mockSoccerSim.TeamService = mockTS
+	mockSoccerSim.MatchService = nil
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(mockSoccerSim.GetTeams)
+	handler.ServeHTTP(rr, req)
+	// teams := mockSoccerSim.GetAllTeams()
+	// // util.WriteToFile(teams)
+	// setReturnDefaults(w)
+	// json.NewEncoder(w).Encode(teams)
 }

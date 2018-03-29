@@ -1,8 +1,8 @@
-package services
+package matches
 
 import (
-	"SoccerSim/model"
 	"fmt"
+	"soccersim/model"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

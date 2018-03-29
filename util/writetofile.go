@@ -1,7 +1,7 @@
 package util
 
 import (
-	"SoccerSim/model"
+	"soccersim/model"
 	"bytes"
 	"encoding/json"
 	"io"

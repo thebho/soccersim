@@ -1,8 +1,8 @@
-package services
+package matches
 
 import (
-	"SoccerSim/model"
 	"fmt"
+	"soccersim/model"
 
 	randtools "github.com/thebho/random-tools"
 )
@@ -13,23 +13,18 @@ type SchedulerDataStore interface {
 	SaveObject(interface{})
 }
 
-type scheduler struct {
-	dataStore SchedulerDataStore
-}
-
 // ScheduleSeason schedules a new season from an slice of teams
-func ScheduleSeason(dataStore SchedulerDataStore, seasonName string) []model.Match {
+func (m MatchServiceImp) ScheduleSeason(seasonName string) []model.Match {
 	fmt.Printf("Scheduling season: %s\n", seasonName)
-	schedulerHelper := scheduler{dataStore: dataStore}
-	teams := dataStore.GetTeams()
-	matches := schedulerHelper.scheduleMatchUps(teams, seasonName)
-	schedulerHelper.insertIntoDB(matches)
+	teams := m.dataStore.GetTeams()
+	matches := m.scheduleMatchUps(teams, seasonName)
+	m.insertIntoDB(matches)
 	return matches
 }
 
-func (s scheduler) insertIntoDB(matches []model.Match) {
+func (m MatchServiceImp) insertIntoDB(matches []model.Match) {
 	for i := range matches {
-		s.dataStore.SaveObject(&matches[i])
+		m.dataStore.SaveObject(&matches[i])
 	}
 
 }
@@ -87,7 +82,7 @@ func position(pos, offset, totalTeams int) int {
 	return ((pos + offset) - totalTeams) + 1
 }
 
-func (s scheduler) scheduleMatchUps(teams []model.Team, name string) []model.Match {
+func (m MatchServiceImp) scheduleMatchUps(teams []model.Team, name string) []model.Match {
 	// _ = createSchedulerHelperArray(teams)
 	var scheduledMatches []model.Match
 	teamMatrixHalf := createTeamMatrix(randtools.Array(len(teams)))

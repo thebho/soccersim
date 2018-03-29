@@ -1,18 +1,25 @@
 package handlers
 
 import (
-	"SoccerSim/data"
 	"net/http"
+	"soccersim/data"
+	"soccersim/services/matches"
+	"soccersim/services/teams"
 )
 
 // SoccerSim struct
 type SoccerSim struct {
-	db *data.PostgresDS
+	TeamService  teams.TeamService
+	MatchService matches.MatchService
 }
 
 // NewSoccerSim constructor
 func NewSoccerSim() SoccerSim {
-	return SoccerSim{db: data.NewPostgresDS()}
+	db := data.NewPostgresDS()
+	return SoccerSim{
+		TeamService:  teams.NewTeamService(db),
+		MatchService: matches.NewMatchService(db),
+	}
 }
 
 func setReturnDefaults(w http.ResponseWriter) {

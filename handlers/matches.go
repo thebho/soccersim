@@ -1,12 +1,11 @@
 package handlers
 
 import (
-	"SoccerSim/model"
-	"SoccerSim/services"
-	"SoccerSim/util"
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"soccersim/model"
+	"soccersim/util"
 	"strconv"
 )
 
@@ -16,7 +15,7 @@ func (s SoccerSim) ScheduleSeason(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Scheduling Season")
 	seasonName, err := util.ParseURL("season_name", r.URL.RequestURI())
 	util.CheckError(err)
-	matches := services.ScheduleSeason(s.db, seasonName)
+	matches := s.MatchService.ScheduleSeason(seasonName)
 	setReturnDefaults(w)
 	json.NewEncoder(w).Encode(matches)
 }
@@ -30,7 +29,7 @@ func (s SoccerSim) GetWeeksMatches(w http.ResponseWriter, r *http.Request) {
 	weekInt, err := strconv.Atoi(week)
 	util.CheckError(err)
 	fmt.Printf("Getting matches for: %s Week: %d\n", seasonName, weekInt)
-	matches := services.GetWeeksMatches(s.db, seasonName, weekInt)
+	matches := s.MatchService.GetWeeksMatches(seasonName, weekInt)
 	setReturnDefaults(w)
 	json.NewEncoder(w).Encode(matches)
 }
@@ -43,7 +42,7 @@ func (s SoccerSim) SimWeeksMatches(w http.ResponseWriter, r *http.Request) {
 	util.CheckError(err)
 	defer r.Body.Close()
 	if simWeekRequest.Action == "simWeek" {
-		services.SimMatchWeek(s.db, simWeekRequest.SeasonName, simWeekRequest.Week)
+		s.MatchService.SimMatchWeek(simWeekRequest.SeasonName, simWeekRequest.Week)
 	} else {
 		fmt.Printf("Action: %s unknown\n", simWeekRequest.Action)
 	}

@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"SoccerSim/services"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -11,8 +10,7 @@ import (
 func (s SoccerSim) GetTeams(w http.ResponseWriter, r *http.Request) {
 	//TODO: Add logger
 	fmt.Println("Getting all teams")
-	teamService := services.NewTeamService(s.db)
-	teams := teamService.GetAllTeams()
+	teams := s.TeamService.GetAllTeams()
 	// util.WriteToFile(teams)
 	setReturnDefaults(w)
 	json.NewEncoder(w).Encode(teams)
