@@ -44,6 +44,7 @@ func (s SoccerSim) SimWeeksMatches(w http.ResponseWriter, r *http.Request) {
 	if simWeekRequest.Action == "simWeek" {
 		s.MatchService.SimMatchWeek(simWeekRequest.SeasonName, simWeekRequest.Week)
 	} else {
-		fmt.Printf("Action: %s unknown\n", simWeekRequest.Action)
+		response := fmt.Sprintf("Action: %s unknown\n", simWeekRequest.Action)
+		http.Error(w, response, http.StatusNotAcceptable)
 	}
 }
