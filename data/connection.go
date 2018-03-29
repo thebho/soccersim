@@ -6,6 +6,7 @@ import (
 	"github.com/go-pg/pg"
 )
 
+// ConnectToDB initializes DB
 func ConnectToDB() *pg.DB {
 	return pg.Connect(&pg.Options{
 		User:     os.Getenv("APP_DB_USER"),

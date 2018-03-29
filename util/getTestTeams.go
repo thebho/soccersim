@@ -1,11 +1,11 @@
 package util
 
 import (
-	"SoccerSim/model"
 	"encoding/json"
 	"io"
 	"os"
 	"path/filepath"
+	"soccersim/model"
 )
 
 // Unmarshal is a function that unmarshals the data from the
@@ -17,7 +17,22 @@ var Unmarshal = func(r io.Reader, v interface{}) error {
 
 // GetTestTeams reads mock team data for testing
 func GetTestTeams() []model.Team {
-	absPath, _ := filepath.Abs("../util/teams.txt")
+	absPath, err := filepath.Abs("../../util/teams.txt")
+	CheckError(err)
+	file, err := os.Open(absPath)
+	CheckError(err)
+	defer file.Close()
+
+	var teams = []model.Team{}
+	err = Unmarshal(file, &teams)
+	CheckError(err)
+	return teams
+}
+
+// GetTestTeamsPath reads mock team data for testing
+func GetTestTeamsPath(path string) []model.Team {
+	absPath, err := filepath.Abs(path)
+	CheckError(err)
 	file, err := os.Open(absPath)
 	CheckError(err)
 	defer file.Close()

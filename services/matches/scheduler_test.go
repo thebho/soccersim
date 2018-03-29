@@ -1,16 +1,22 @@
-package services
+package matches
 
 import (
-	"SoccerSim/util"
+	"soccersim/model"
+	"soccersim/util"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 )
 
 const testSeasonConstant = "Test Season"
 
 func TestScheduleSeason(t *testing.T) {
-	matchUps := ScheduleSeason(mockSchedulerDataStore, testSeasonConstant)
+	mockMDS := new(MockMatchDataStore)
+	mockMDS.On("GetMatches", mock.Anything, mock.Anything).Return([]model.Match{matchA, matchB})
+	mockMDS.On("SaveObject", mock.Anything)
+	matchService := NewMatchService(mockMDS)
+	matchUps := matchService.ScheduleSeason(testSeasonConstant)
 	assert.Equal(t, 380, len(matchUps))
 	assert.Equal(t, testSeasonConstant, matchUps[0].Season)
 }
@@ -26,8 +32,10 @@ func TestCreateMatchUps(t *testing.T) {
 
 func TestScheduledMatchUps(t *testing.T) {
 	teams := util.GetTestTeams()
-	testScheduler := scheduler{mockSchedulerDataStore}
-	matchups := testScheduler.scheduleMatchUps(teams, "MockSeasonName")
+	mockMDS := new(MockMatchDataStore)
+	mockMDS.On("GetMatches", "MOCK", 1).Return([]model.Match{matchA, matchB})
+	matchService := NewMatchService(mockMDS)
+	matchups := matchService.scheduleMatchUps(teams, "MockSeasonName")
 	assert.Equal(t, 380, len(matchups))
 
 	// matches per team

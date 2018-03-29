@@ -1,10 +1,5 @@
 package model
 
-// MatchesDataStore interface
-type MatchesDataStore interface {
-	GetMatches(string, int) []Match //season, week
-}
-
 //Match data model
 type Match struct {
 	tableName     struct{} `sql:"matches, alias:match"`
