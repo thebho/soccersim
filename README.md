@@ -1,4 +1,5 @@
 [![CircleCI](https://circleci.com/gh/thebho/soccersim.svg?style=svg)](https://circleci.com/gh/thebho/soccersim)
+[![Go Report Card](https://goreportcard.com/badge/github.com/thebho/soccersim)](https://goreportcard.com/report/github.com/thebho/soccersim)
 
 # Soccer Sim
 ### Run
