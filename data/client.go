@@ -46,6 +46,16 @@ func (p PostgresDS) GetTeams() []model.Team {
 	return teams
 }
 
+// GetTeamsBySeason return team by season
+func (p PostgresDS) GetTeamsBySeason(season string) []model.Team {
+	var teams []model.Team
+	err := p.db.Model(&teams).
+		Where("season = ?", season).
+		Select()
+	util.CheckError(err)
+	return teams
+}
+
 // SaveObject imp
 func (p PostgresDS) SaveObject(object interface{}) {
 	err := p.db.Insert(object)

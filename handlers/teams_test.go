@@ -14,7 +14,7 @@ func TestGetTeams(t *testing.T) {
 	req, err := http.NewRequest("GET", "/teams", nil)
 	util.TestError(t, err)
 	mockTS := new(MockTeamService)
-	mockTS.On("GetAllTeams")
+	mockTS.On("GetAllTeams", "")
 	mockSoccerSim := handlers.NewSoccerSim()
 	mockSoccerSim.TeamService = mockTS
 	mockSoccerSim.MatchService = nil

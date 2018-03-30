@@ -9,6 +9,7 @@ type Team struct {
 	GamesDrawn   int
 	GoalsScored  int
 	GoalsAllowed int
+	Season       string
 }
 
 // AddResult updates a teams record and Goals

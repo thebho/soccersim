@@ -11,7 +11,7 @@ type MockTeamService struct {
 	mock.Mock
 }
 
-func (m *MockTeamService) GetAllTeams() []model.Team {
+func (m *MockTeamService) GetAllTeams(season string) []model.Team {
 	m.Called()
 	return util.GetTestTeamsPath("../util/teams.txt")
 }

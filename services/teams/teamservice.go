@@ -4,7 +4,8 @@ import "github.com/thebho/soccersim/model"
 
 // TeamDataStore interface
 type TeamDataStore interface {
-	GetTeam(string) model.Team //teamABV
+	GetTeam(string) model.Team            //teamABV
+	GetTeamsBySeason(string) []model.Team //season
 	GetTeams() []model.Team
 }
 
@@ -18,9 +19,12 @@ func NewTeamService(dataStore TeamDataStore) TeamServiceImp {
 	return TeamServiceImp{dataStore: dataStore}
 }
 
-// GetAllTeams service
-func (t TeamServiceImp) GetAllTeams() []model.Team {
-	return t.dataStore.GetTeams()
+// GetAllTeams service.  If season is nil, returns all teams
+func (t TeamServiceImp) GetAllTeams(season string) []model.Team {
+	if season == "" {
+		return t.dataStore.GetTeams()
+	}
+	return t.dataStore.GetTeamsBySeason(season)
 }
 
 // GetTeam service

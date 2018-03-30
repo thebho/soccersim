@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS teams (
   games_lost int NOT NULL DEFAULT 0,
   games_drawn int NOT NULL DEFAULT 0,
   goals_scored int NOT NULL DEFAULT 0,
-  goals_allowed int NOT NULL DEFAULT 0
+  goals_allowed int NOT NULL DEFAULT 0,
+  season text NOT NULL
 );
 
 
