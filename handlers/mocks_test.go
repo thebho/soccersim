@@ -12,7 +12,7 @@ type MockTeamService struct {
 }
 
 func (m *MockTeamService) GetAllTeams(season string) []model.Team {
-	m.Called()
+	m.Called(season)
 	return util.GetTestTeamsPath("../util/teams.txt")
 }
 func (m *MockTeamService) GetTeam(teamAbv string) model.Team {

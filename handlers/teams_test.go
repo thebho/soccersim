@@ -9,8 +9,7 @@ import (
 	"github.com/thebho/soccersim/util"
 )
 
-// GetTeams returns all teams from the database
-func TestGetTeams(t *testing.T) {
+func TestGetTeamsNoSeason(t *testing.T) {
 	req, err := http.NewRequest("GET", "/teams", nil)
 	util.TestError(t, err)
 	mockTS := new(MockTeamService)
@@ -21,8 +20,17 @@ func TestGetTeams(t *testing.T) {
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(mockSoccerSim.GetTeams)
 	handler.ServeHTTP(rr, req)
-	// teams := mockSoccerSim.GetAllTeams()
-	// // util.WriteToFile(teams)
-	// setReturnDefaults(w)
-	// json.NewEncoder(w).Encode(teams)
+}
+
+func TestGetTeamsSeason(t *testing.T) {
+	req, err := http.NewRequest("GET", "/teams?season=mock", nil)
+	util.TestError(t, err)
+	mockTS := new(MockTeamService)
+	mockTS.On("GetAllTeams", "mock")
+	mockSoccerSim := handlers.NewSoccerSim()
+	mockSoccerSim.TeamService = mockTS
+	mockSoccerSim.MatchService = nil
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(mockSoccerSim.GetTeams)
+	handler.ServeHTTP(rr, req)
 }
