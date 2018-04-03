@@ -17,7 +17,19 @@ CREATE TABLE IF NOT EXISTS team_season (
   goals_allowed int NOT NULL DEFAULT 0
 );
 
+CREATE TABLE IF NOT EXISTS matches (
+  id SERIAL PRIMARY KEY,
+  home_team text NOT NULL,
+  away_team text NOT NULL,
+  home_team_goals int,
+  away_team_goals int,
+  match_week int NOT NULL,
+  season text NOT NULL,
+  played boolean
+);
+
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
+DROP TABLE matches;
 DROP TABLE team_season;
 DROP TABLE teams;
