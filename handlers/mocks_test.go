@@ -23,7 +23,7 @@ func (m *MockTeamService) GetTeamSeason(teamAbv, season string) model.TeamSeason
 	m.Called(teamAbv, season)
 	return model.TeamSeason{}
 }
-func (m *MockTeamService) GetTeamsSeasons() []model.TeamSeason {
+func (m *MockTeamService) GetTeamSeasons() []model.TeamSeason {
 	m.Called()
 	return nil
 }
