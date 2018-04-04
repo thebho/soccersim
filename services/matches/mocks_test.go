@@ -14,9 +14,9 @@ type MockMatchDataStore struct {
 	mock.Mock
 }
 
-func (m *MockMatchDataStore) GetTeamSeason(teamAbv, season string) model.TeamSeasonJoin {
+func (m *MockMatchDataStore) GetTeamSeason(teamAbv, season string) model.TeamSeason {
 	_ = m.Called(teamAbv, season)
-	return model.NewTeamSeasonJoin(1, teamA.Abv, teamA.Name, season)
+	return model.TeamSeason{Season: season, TeamID: teamAbv}
 }
 func (m *MockMatchDataStore) GetMatches(season string, matchWeek int) []model.Match {
 	_ = m.Called(season, matchWeek)
@@ -38,7 +38,7 @@ type MockMatchSimulator struct {
 	mock.Mock
 }
 
-func (m *MockMatchSimulator) Sim(homeTeamSeason, awayTeamSeason *model.TeamSeasonJoin, match *model.Match) {
+func (m *MockMatchSimulator) Sim(homeTeamSeason, awayTeamSeason *model.TeamSeason, match *model.Match) {
 	_ = m.Called(homeTeamSeason, awayTeamSeason, match)
 	return
 }

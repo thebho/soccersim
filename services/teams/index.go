@@ -6,6 +6,6 @@ import "github.com/thebho/soccersim/model"
 type TeamService interface {
 	GetAllTeams() []model.Team
 	GetTeam(string) model.Team
-	GetTeamSeason(string, string) model.TeamSeasonJoin
+	GetTeamSeason(string, string) model.TeamSeason
 	GetTeamSeasons(string) []model.TeamSeasonJoin
 }

@@ -10,10 +10,8 @@ import (
 
 func TestMatchPlayed(t *testing.T) {
 	matchSimulator := testMatchSimulator([]int{1}, []int{0})
-	teamA := &model.Team{}
-	teamB := &model.Team{}
-	teamASeason := model.NewTeamSeasonJoin(1, teamA.Abv, teamA.Name, "MockSeason")
-	teamBSeason := model.NewTeamSeasonJoin(2, teamB.Abv, teamB.Name, "MockSeason")
+	teamASeason := model.TeamSeason{}
+	teamBSeason := model.TeamSeason{}
 	match := &model.Match{}
 	matchSimulator.Sim(&teamASeason, &teamBSeason, match)
 	assert.Equal(t, true, match.Played)
@@ -21,8 +19,8 @@ func TestMatchPlayed(t *testing.T) {
 
 func TestMatchSimulatorFixedResults(t *testing.T) {
 	matchSimulator := testMatchSimulator([]int{1}, []int{0})
-	teamA := &model.TeamSeasonJoin{}
-	teamB := &model.TeamSeasonJoin{}
+	teamA := &model.TeamSeason{}
+	teamB := &model.TeamSeason{}
 	match := &model.Match{}
 	matchSimulator.Sim(teamA, teamB, match)
 	assert.Equal(t, 1, teamA.GamesWon)
@@ -40,10 +38,9 @@ func TestMatchSimulatorFixedResults(t *testing.T) {
 
 func TestMatchSimulatorDraw(t *testing.T) {
 	matchSimulator := testMatchSimulator([]int{1}, []int{1})
-	teamA := &model.Team{}
-	teamB := &model.Team{}
-	teamASeason := model.NewTeamSeasonJoin(1, teamA.Abv, teamA.Name, "MockSeason")
-	teamBSeason := model.NewTeamSeasonJoin(2, teamB.Abv, teamB.Name, "MockSeason")
+
+	teamASeason := model.TeamSeason{}
+	teamBSeason := model.TeamSeason{}
 	match := &model.Match{}
 	matchSimulator.Sim(&teamASeason, &teamBSeason, match)
 	assert.Equal(t, 0, teamASeason.GamesWon)
@@ -60,10 +57,9 @@ func TestMatchSimulatorDraw(t *testing.T) {
 
 func TestMatchSimRandom(t *testing.T) {
 	matchSimulator := NewMatchSimulator()
-	teamA := &model.Team{Abv: "A"}
-	teamB := &model.Team{Abv: "B"}
-	teamASeason := model.NewTeamSeasonJoin(1, teamA.Abv, teamA.Name, "MockSeason")
-	teamBSeason := model.NewTeamSeasonJoin(2, teamB.Abv, teamB.Name, "MockSeason")
+
+	var teamASeason model.TeamSeason
+	var teamBSeason model.TeamSeason
 	match := &model.Match{HomeTeam: "A", AwayTeam: "B"}
 	matchSimulator.Sim(&teamASeason, &teamBSeason, match)
 	assert.NotNil(t, match.AwayTeamGoals)

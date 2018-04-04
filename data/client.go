@@ -39,8 +39,8 @@ func (p PostgresDS) GetTeam(teamABV string) model.Team {
 }
 
 // GetTeamSeason returns a TeamSeason with a Team object
-func (p PostgresDS) GetTeamSeason(teamABV, season string) model.TeamSeasonJoin {
-	var teamSeason model.TeamSeasonJoin
+func (p PostgresDS) GetTeamSeason(teamABV, season string) model.TeamSeason {
+	var teamSeason model.TeamSeason
 	err := p.db.Model(&teamSeason).
 		Where("team_id = ?", teamABV).
 		Where("season = ?", season).
