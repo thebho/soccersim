@@ -2,6 +2,7 @@ package matches
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/thebho/soccersim/model"
 
@@ -18,9 +19,21 @@ type SchedulerDataStore interface {
 func (m MatchServiceImp) ScheduleSeason(seasonName string) []model.Match {
 	fmt.Printf("Scheduling season: %s\n", seasonName)
 	teams := m.dataStore.GetTeams()
+	m.saveTeamSeasons(teams, seasonName)
 	matches := m.scheduleMatchUps(teams, seasonName)
 	m.insertIntoDB(matches)
 	return matches
+}
+
+func (m MatchServiceImp) saveTeamSeasons(teams []model.Team, season string) {
+	log.Println("Saving team seasons")
+	for i := range teams {
+		teamSeason := model.TeamSeason{}
+		teamSeason.Season = season
+		teamSeason.TeamID = teams[i].Abv
+		log.Println(teamSeason)
+		m.dataStore.SaveObject(&teamSeason)
+	}
 }
 
 func (m MatchServiceImp) insertIntoDB(matches []model.Match) {

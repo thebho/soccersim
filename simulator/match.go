@@ -14,6 +14,7 @@ type matchSimulator struct {
 	awayTeam []int
 }
 
+// NewMatchSimulator returns a new private simulator
 func NewMatchSimulator() matchSimulator {
 	return matchSimulator{
 		homeTeam: homeTeamGoalsArray,
@@ -29,7 +30,7 @@ func testMatchSimulator(homeTeam, awayTeam []int) matchSimulator {
 }
 
 // Sim takes a home "Team" and away "Team" and prints results
-func (m matchSimulator) Sim(homeTeam, awayTeam *model.Team, match *model.Match) {
+func (m matchSimulator) Sim(homeTeam, awayTeam *model.TeamSeason, match *model.Match) {
 	//TODO: Add variance in the weighted arrays (if a team is +1 form, only use indexes 1:len(array), if they are -2 only use indexes 0:len(array)-2...)
 	homeTeamGoals := rand.RandIntFromArray(m.homeTeam)
 	awayTeamGoals := rand.RandIntFromArray(m.awayTeam)

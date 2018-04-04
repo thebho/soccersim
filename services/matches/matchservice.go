@@ -8,7 +8,7 @@ import (
 // MatchDataStore interface
 type MatchDataStore interface {
 	GetMatches(string, int) []model.Match
-	GetTeam(string) model.Team
+	GetTeamSeason(string, string) model.TeamSeason
 	UpdateObject(interface{})
 	GetTeams() []model.Team
 	SaveObject(interface{})
@@ -16,7 +16,7 @@ type MatchDataStore interface {
 
 // Simulator describes a simulator
 type Simulator interface {
-	Sim(*model.Team, *model.Team, *model.Match)
+	Sim(*model.TeamSeason, *model.TeamSeason, *model.Match)
 }
 
 // MatchServiceImp implements MatchService

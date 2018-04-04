@@ -19,3 +19,9 @@ func TestGetTeam(t *testing.T) {
 	assert.Equal(t, teamA.Abv, team.Abv)
 	assert.Equal(t, teamA.Name, team.Name)
 }
+
+func TestGetTeamSeason(t *testing.T) {
+	teamSeason := teamService.GetTeamSeason("MKA", "MockSeason")
+	assert.Equal(t, teamA.Abv, teamSeason.Team.Abv)
+	assert.Equal(t, teamASeasonA.ID, teamSeason.ID)
+}

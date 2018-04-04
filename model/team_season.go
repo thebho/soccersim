@@ -5,12 +5,13 @@ type TeamSeason struct {
 	tableName    struct{} `sql:"team_season, alias:team_seasons"`
 	ID           int
 	Season       string
-	TeamID       string
 	GamesWon     int
 	GamesLost    int
 	GamesDrawn   int
 	GoalsScored  int
 	GoalsAllowed int
+	TeamID       string
+	Team         *Team
 }
 
 // AddResult updates a teams record and Goals

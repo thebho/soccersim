@@ -17,19 +17,19 @@ func (m MatchServiceImp) SimMatchWeek(season string, matchWeek int) {
 	fmt.Printf("Simming match week: %d in season: %s\n", matchWeek, season)
 	matches := m.dataStore.GetMatches(season, matchWeek)
 	for _, match := range matches {
-		m.simMatch(match)
+		m.simMatch(match, season)
 	}
 }
 
-func (m MatchServiceImp) simMatch(match model.Match) {
+func (m MatchServiceImp) simMatch(match model.Match, season string) {
 	if match.Played {
 		fmt.Printf("Skipping previously played match: %d\n", match.ID)
 		return
 	}
-	homeTeam := m.dataStore.GetTeam(match.HomeTeam)
-	awayTeam := m.dataStore.GetTeam(match.AwayTeam)
-	m.matchSimulator.Sim(&homeTeam, &awayTeam, &match)
-	m.dataStore.UpdateObject(&homeTeam)
-	m.dataStore.UpdateObject(&awayTeam)
+	homeTeamSeason := m.dataStore.GetTeamSeason(match.HomeTeam, season)
+	awayTeamSeason := m.dataStore.GetTeamSeason(match.AwayTeam, season)
+	m.matchSimulator.Sim(&homeTeamSeason, &awayTeamSeason, &match)
+	m.dataStore.UpdateObject(&homeTeamSeason)
+	m.dataStore.UpdateObject(&awayTeamSeason)
 	m.dataStore.UpdateObject(&match)
 }

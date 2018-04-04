@@ -11,8 +11,8 @@ import (
 func TestSimMatchWeekNoPanic(t *testing.T) {
 	mockMDS := new(MockMatchDataStore)
 	mockMDS.On("GetMatches", "MOCK", 1).Return([]model.Match{matchA, matchB})
-	mockMDS.On("GetTeam", "ARS").Return(teamA)
-	mockMDS.On("GetTeam", mock.Anything).Return(teamB)
+	mockMDS.On("GetTeamSeason", "ARS", "MOCK").Return(teamA)
+	mockMDS.On("GetTeamSeason", mock.Anything, "MOCK").Return(teamB)
 	mockMDS.On("UpdateObject", mock.Anything)
 	mockSimulator := new(MockMatchSimulator)
 	mockSimulator.On("Sim", mock.Anything, mock.Anything, mock.Anything)
@@ -29,24 +29,24 @@ func TestSimMatchPlayed(t *testing.T) {
 	// This will blow up if false because there is no datastore
 	match := model.Match{Played: true}
 	matchService = NewMatchService(mockMDS)
-	matchService.simMatch(match)
-	mockMDS.AssertNotCalled(t, "GetTeam", mock.Anything)
+	matchService.simMatch(match, "MOCK")
+	mockMDS.AssertNotCalled(t, "GetTeamSeason", mock.Anything, mock.Anything)
 }
 
 func TestSimMatch(t *testing.T) {
 
 	mockMDS := new(MockMatchDataStore)
 	match := model.Match{HomeTeam: "TeamA", AwayTeam: "TeamB", Played: false}
-	mockMDS.On("GetTeam", "TeamA").Return(teamA)
-	mockMDS.On("GetTeam", "TeamB").Return(teamB)
+	mockMDS.On("GetTeamSeason", "TeamA", "MOCK").Return(teamA)
+	mockMDS.On("GetTeamSeason", "TeamB", "MOCK").Return(teamB)
 	mockMDS.On("UpdateObject", mock.Anything)
 	mockSimulator := new(MockMatchSimulator)
 	mockSimulator.On("Sim", mock.Anything, mock.Anything, mock.Anything)
 	matchService := NewMatchService(mockMDS)
 	matchService.matchSimulator = mockSimulator
 
-	matchService.simMatch(match)
-	mockMDS.AssertCalled(t, "GetTeam", "TeamA")
-	mockMDS.AssertCalled(t, "GetTeam", "TeamB")
+	matchService.simMatch(match, "MOCK")
+	mockMDS.AssertCalled(t, "GetTeamSeason", "TeamA", "MOCK")
+	mockMDS.AssertCalled(t, "GetTeamSeason", "TeamB", "MOCK")
 	mockMDS.AssertNumberOfCalls(t, "UpdateObject", 3)
 }
