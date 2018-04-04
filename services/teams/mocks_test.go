@@ -57,7 +57,9 @@ var teamA = model.Team{Name: "MockA", Abv: "MKA"}
 var teamB = model.Team{Name: "MockB", Abv: "MKB"}
 var teamC = model.Team{Name: "MockC", Abv: "MockC"}
 var teamASeasonA = model.TeamSeason{Season: "MockSeason", ID: 1, TeamID: teamA.Abv}
+var teamASeasonB = model.TeamSeason{Season: "MockSeason", ID: 2, TeamID: teamB.Abv}
 var teamASeasonJoinA = model.NewTeamSeasonJoin(teamASeasonA.ID, teamA.Abv, teamA.Name, teamASeasonA.Season)
+var teamBSeasonJoinB = model.NewTeamSeasonJoin(teamASeasonB.ID, teamB.Abv, teamB.Name, teamASeasonB.Season)
 
 type MockTeamDataStore struct{}
 
@@ -75,7 +77,7 @@ func (m MockTeamDataStore) GetTeamSeason(teamABV, season string) model.TeamSeaso
 	panic(errors.New(""))
 }
 func (m MockTeamDataStore) GetTeamSeasons(season string) []model.TeamSeasonJoin {
-	return nil
+	return []model.TeamSeasonJoin{teamASeasonJoinA, teamBSeasonJoinB}
 }
 func (m MockTeamDataStore) GetTeams() []model.Team {
 	return []model.Team{teamA, teamB}

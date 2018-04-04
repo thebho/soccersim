@@ -19,9 +19,9 @@ func (m *MockTeamService) GetTeam(teamAbv string) model.Team {
 	m.Called(teamAbv)
 	return model.Team{}
 }
-func (m *MockTeamService) GetTeamSeason(teamAbv, season string) model.TeamSeasonJoin {
+func (m *MockTeamService) GetTeamSeason(teamAbv, season string) model.TeamSeason {
 	m.Called(teamAbv, season)
-	return model.TeamSeasonJoin{}
+	return model.TeamSeason{}
 }
 func (m *MockTeamService) GetTeamSeasons(season string) []model.TeamSeasonJoin {
 	m.Called(season)
