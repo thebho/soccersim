@@ -22,8 +22,21 @@ func main() {
 
 func createRouter() {
 	router = mux.NewRouter()
-	router.HandleFunc("/teams", soccerSim.GetTeams).Methods("GET")
+
+	// Deprecated
 	router.HandleFunc("/season", soccerSim.ScheduleSeason).Methods("POST")
+
+	teams := router.PathPrefix("/teams").Subrouter()
+
+	// Get all teams
+	teams.HandleFunc("", soccerSim.GetWeeksMatches).Methods("GET")
+	teams.HandleFunc("/{teamAbv}/seasons/{seasonKey}", soccerSim.GetTeamSeason).Methods("GET")
+
+	router.HandleFunc("/teams", soccerSim.GetTeams).Methods("GET")
+
+	seasons := router.PathPrefix("/seasons").Subrouter()
+	seasons.HandleFunc("", soccerSim.ScheduleSeason).Methods("POST")
+	seasons.HandleFunc("/{seasonKey}", soccerSim.GetSeasonTeams).Methods("GET")
 
 	matches := router.PathPrefix("/matches").Subrouter()
 

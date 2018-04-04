@@ -1,11 +1,17 @@
 package teams
 
-import "github.com/thebho/soccersim/model"
+import (
+	"log"
+
+	"github.com/thebho/soccersim/model"
+)
 
 // TeamDataStore interface
 type TeamDataStore interface {
 	GetTeam(string) model.Team //teamABV
 	GetTeams() []model.Team
+	GetTeamSeason(string, string) model.TeamSeason
+	GetTeamSeasons(string) []model.TeamSeasonJoin
 }
 
 // TeamServiceImp implements TeamServices
@@ -26,4 +32,15 @@ func (t TeamServiceImp) GetAllTeams() []model.Team {
 // GetTeam service
 func (t TeamServiceImp) GetTeam(teamABV string) model.Team {
 	return t.dataStore.GetTeam(teamABV)
+}
+
+// GetTeamSeason returns a TeamSeason (with Team) for the teamABV and season keys
+func (t TeamServiceImp) GetTeamSeason(teamABV, season string) model.TeamSeason {
+	return t.dataStore.GetTeamSeason(teamABV, season)
+}
+
+// GetTeamSeasons all team seasons
+func (t TeamServiceImp) GetTeamSeasons(season string) []model.TeamSeasonJoin {
+	log.Println("Getting team seasons")
+	return t.dataStore.GetTeamSeasons(season)
 }

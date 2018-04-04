@@ -1,7 +1,7 @@
 package model
 
 // PointsSorter sorts an array of teams by total points
-type PointsSorter []*Team
+type PointsSorter []*TeamSeason
 
 func (a PointsSorter) Len() int           { return len(a) }
 func (a PointsSorter) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }

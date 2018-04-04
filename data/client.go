@@ -38,6 +38,28 @@ func (p PostgresDS) GetTeam(teamABV string) model.Team {
 	return team
 }
 
+// GetTeamSeason returns a TeamSeason with a Team object
+func (p PostgresDS) GetTeamSeason(teamABV, season string) model.TeamSeason {
+	var teamSeason model.TeamSeason
+	err := p.db.Model(&teamSeason).
+		Where("team_id = ?", teamABV).
+		Where("season = ?", season).
+		First()
+	util.CheckError(err)
+	// team := p.GetTeam(teamABV)
+	// teamSeason.Team = &team
+	return teamSeason
+}
+
+// GetTeamSeasons returns all team seasons
+func (p PostgresDS) GetTeamSeasons(season string) []model.TeamSeasonJoin {
+	var teamSeasons []model.TeamSeasonJoin
+	query := `SELECT * from team_season INNER JOIN teams ON (team_season.team_id = teams.abv) AND season = ?;`
+	_, err := p.db.Model((*model.TeamSeason)(nil)).Query(&teamSeasons, query, season)
+	util.CheckError(err)
+	return teamSeasons
+}
+
 // GetTeams imp
 func (p PostgresDS) GetTeams() []model.Team {
 	var teams []model.Team
