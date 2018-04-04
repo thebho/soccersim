@@ -22,9 +22,12 @@ func (s SoccerSim) GetTeamSeason(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// GetTeamSeason returns all teams from the database
-func (s SoccerSim) GetTeamSeasons(w http.ResponseWriter, r *http.Request) {
-	teamSeasons := s.TeamService.GetTeamSeasons()
+// GetSeasonTeams returns all teams from the database
+func (s SoccerSim) GetSeasonTeams(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	season := vars["seasonKey"]
+	log.Printf("Getting team season for %s", season)
+	teamSeasons := s.TeamService.GetTeamSeasons(season)
 	setReturnDefaults(w)
 	json.NewEncoder(w).Encode(teamSeasons)
 

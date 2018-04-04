@@ -12,17 +12,17 @@ func TestMatchPlayed(t *testing.T) {
 	matchSimulator := testMatchSimulator([]int{1}, []int{0})
 	teamA := &model.Team{}
 	teamB := &model.Team{}
-	teamASeason := &model.TeamSeason{Team: teamA}
-	teamBSeason := &model.TeamSeason{Team: teamB}
+	teamASeason := model.NewTeamSeasonJoin(1, teamA.Abv, teamA.Name, "MockSeason")
+	teamBSeason := model.NewTeamSeasonJoin(2, teamB.Abv, teamB.Name, "MockSeason")
 	match := &model.Match{}
-	matchSimulator.Sim(teamASeason, teamBSeason, match)
+	matchSimulator.Sim(&teamASeason, &teamBSeason, match)
 	assert.Equal(t, true, match.Played)
 }
 
 func TestMatchSimulatorFixedResults(t *testing.T) {
 	matchSimulator := testMatchSimulator([]int{1}, []int{0})
-	teamA := &model.TeamSeason{}
-	teamB := &model.TeamSeason{}
+	teamA := &model.TeamSeasonJoin{}
+	teamB := &model.TeamSeasonJoin{}
 	match := &model.Match{}
 	matchSimulator.Sim(teamA, teamB, match)
 	assert.Equal(t, 1, teamA.GamesWon)
@@ -42,10 +42,10 @@ func TestMatchSimulatorDraw(t *testing.T) {
 	matchSimulator := testMatchSimulator([]int{1}, []int{1})
 	teamA := &model.Team{}
 	teamB := &model.Team{}
-	teamASeason := &model.TeamSeason{Team: teamA}
-	teamBSeason := &model.TeamSeason{Team: teamB}
+	teamASeason := model.NewTeamSeasonJoin(1, teamA.Abv, teamA.Name, "MockSeason")
+	teamBSeason := model.NewTeamSeasonJoin(2, teamB.Abv, teamB.Name, "MockSeason")
 	match := &model.Match{}
-	matchSimulator.Sim(teamASeason, teamBSeason, match)
+	matchSimulator.Sim(&teamASeason, &teamBSeason, match)
 	assert.Equal(t, 0, teamASeason.GamesWon)
 	assert.Equal(t, 0, teamASeason.GamesLost)
 	assert.Equal(t, 1, teamASeason.GamesDrawn)
@@ -62,10 +62,10 @@ func TestMatchSimRandom(t *testing.T) {
 	matchSimulator := NewMatchSimulator()
 	teamA := &model.Team{Abv: "A"}
 	teamB := &model.Team{Abv: "B"}
-	teamASeason := &model.TeamSeason{Team: teamA}
-	teamBSeason := &model.TeamSeason{Team: teamB}
+	teamASeason := model.NewTeamSeasonJoin(1, teamA.Abv, teamA.Name, "MockSeason")
+	teamBSeason := model.NewTeamSeasonJoin(2, teamB.Abv, teamB.Name, "MockSeason")
 	match := &model.Match{HomeTeam: "A", AwayTeam: "B"}
-	matchSimulator.Sim(teamASeason, teamBSeason, match)
+	matchSimulator.Sim(&teamASeason, &teamBSeason, match)
 	assert.NotNil(t, match.AwayTeamGoals)
 	assert.NotNil(t, match.HomeTeamGoals)
 }

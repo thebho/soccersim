@@ -19,12 +19,12 @@ func (m *MockTeamService) GetTeam(teamAbv string) model.Team {
 	m.Called(teamAbv)
 	return model.Team{}
 }
-func (m *MockTeamService) GetTeamSeason(teamAbv, season string) model.TeamSeason {
+func (m *MockTeamService) GetTeamSeason(teamAbv, season string) model.TeamSeasonJoin {
 	m.Called(teamAbv, season)
-	return model.TeamSeason{}
+	return model.TeamSeasonJoin{}
 }
-func (m *MockTeamService) GetTeamSeasons() []model.TeamSeason {
-	m.Called()
+func (m *MockTeamService) GetTeamSeasons(season string) []model.TeamSeasonJoin {
+	m.Called(season)
 	return nil
 }
 

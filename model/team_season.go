@@ -1,6 +1,12 @@
 package model
 
-// TeamSeason data model
+// TeamSeasonJoin data model
+type TeamSeasonJoin struct {
+	Team
+	TeamSeason
+}
+
+// TeamSeason for Instert
 type TeamSeason struct {
 	tableName    struct{} `sql:"team_season, alias:team_seasons"`
 	ID           int
@@ -11,7 +17,16 @@ type TeamSeason struct {
 	GoalsScored  int
 	GoalsAllowed int
 	TeamID       string
-	Team         *Team
+}
+
+// NewTeamSeasonJoin returns a new team season with team variables
+func NewTeamSeasonJoin(id int, abv, name, season string) TeamSeasonJoin {
+	var teamSeason = TeamSeasonJoin{}
+	teamSeason.ID = id
+	teamSeason.Season = season
+	teamSeason.Abv = abv
+	teamSeason.Name = name
+	return teamSeason
 }
 
 // AddResult updates a teams record and Goals

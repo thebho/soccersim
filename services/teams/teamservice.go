@@ -10,8 +10,8 @@ import (
 type TeamDataStore interface {
 	GetTeam(string) model.Team //teamABV
 	GetTeams() []model.Team
-	GetTeamSeason(string, string) model.TeamSeason
-	GetTeamSeasons() []model.TeamSeason
+	GetTeamSeason(string, string) model.TeamSeasonJoin
+	GetTeamSeasons(string) []model.TeamSeasonJoin
 }
 
 // TeamServiceImp implements TeamServices
@@ -35,12 +35,12 @@ func (t TeamServiceImp) GetTeam(teamABV string) model.Team {
 }
 
 // GetTeamSeason returns a TeamSeason (with Team) for the teamABV and season keys
-func (t TeamServiceImp) GetTeamSeason(teamABV, season string) model.TeamSeason {
+func (t TeamServiceImp) GetTeamSeason(teamABV, season string) model.TeamSeasonJoin {
 	return t.dataStore.GetTeamSeason(teamABV, season)
 }
 
 // GetTeamSeasons all team seasons
-func (t TeamServiceImp) GetTeamSeasons() []model.TeamSeason {
+func (t TeamServiceImp) GetTeamSeasons(season string) []model.TeamSeasonJoin {
 	log.Println("Getting team seasons")
-	return t.dataStore.GetTeamSeasons()
+	return t.dataStore.GetTeamSeasons(season)
 }
