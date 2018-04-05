@@ -34,14 +34,11 @@ func (t *TeamSeason) AddResult(goalsFor, goalsAgainst int) {
 	t.GoalsScored += goalsFor
 	t.GoalsAllowed += goalsAgainst
 	if goalsFor > goalsAgainst {
-		// fmt.Printf("%s Wins! %d-%d\n", t.Name, goalsFor, goalsAgainst)
 		t.GamesWon++
 	} else if goalsFor == goalsAgainst {
 		t.GamesDrawn++
-		// fmt.Printf("Draw %d-%d\n", goalsFor, goalsAgainst)
 	} else {
 		t.GamesLost++
-		// fmt.Printf("%s Loses %d-%d\n", t.Name, goalsAgainst, goalsFor)
 	}
 }
 

@@ -1,8 +1,7 @@
 package matches
 
 import (
-	"fmt"
-
+	log "github.com/sirupsen/logrus"
 	"github.com/thebho/soccersim/model"
 )
 
@@ -14,7 +13,7 @@ import (
 4. Updates the teams records and goals
 */
 func (m MatchServiceImp) SimMatchWeek(season string, matchWeek int) {
-	fmt.Printf("Simming match week: %d in season: %s\n", matchWeek, season)
+	log.Infof("Simming match week: %d in season: %s\n", matchWeek, season)
 	matches := m.dataStore.GetMatches(season, matchWeek)
 	for _, match := range matches {
 		m.simMatch(match, season)
@@ -23,7 +22,7 @@ func (m MatchServiceImp) SimMatchWeek(season string, matchWeek int) {
 
 func (m MatchServiceImp) simMatch(match model.Match, season string) {
 	if match.Played {
-		fmt.Printf("Skipping previously played match: %d\n", match.ID)
+		log.Warningf("Skipping previously played match: %d\n", match.ID)
 		return
 	}
 	homeTeamSeason := m.dataStore.GetTeamSeason(match.HomeTeam, season)

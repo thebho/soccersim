@@ -1,7 +1,6 @@
 package matches
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/thebho/soccersim/model"
@@ -15,6 +14,5 @@ func TestGetWeeksMatches(t *testing.T) {
 	matchService := NewMatchService(mockMDS)
 
 	matches := matchService.GetWeeksMatches("MOCK", 1)
-	fmt.Println(matches)
 	assert.Equal(t, matchA.HomeTeam, matches[0].HomeTeam)
 }

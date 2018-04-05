@@ -2,8 +2,9 @@ package handlers
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/gorilla/mux"
 )
@@ -14,7 +15,7 @@ func (s SoccerSim) GetTeamSeason(w http.ResponseWriter, r *http.Request) {
 	season := vars["seasonKey"]
 
 	teamAbv := vars["teamAbv"]
-	log.Printf("Getting team season for %s/%s", teamAbv, season)
+	log.Infof("Getting team season for %s/%s", teamAbv, season)
 
 	teamSeason := s.TeamService.GetTeamSeason(teamAbv, season)
 	setReturnDefaults(w)
@@ -26,7 +27,7 @@ func (s SoccerSim) GetTeamSeason(w http.ResponseWriter, r *http.Request) {
 func (s SoccerSim) GetSeasonTeams(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	season := vars["seasonKey"]
-	log.Printf("Getting team season for %s", season)
+	log.Infof("Getting team season for %s", season)
 	teamSeasons := s.TeamService.GetTeamSeasons(season)
 	setReturnDefaults(w)
 	json.NewEncoder(w).Encode(teamSeasons)

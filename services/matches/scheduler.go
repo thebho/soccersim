@@ -1,11 +1,9 @@
 package matches
 
 import (
-	"fmt"
-	"log"
-
 	"github.com/thebho/soccersim/model"
 
+	log "github.com/sirupsen/logrus"
 	randtools "github.com/thebho/random-tools"
 )
 
@@ -17,7 +15,7 @@ type SchedulerDataStore interface {
 
 // ScheduleSeason schedules a new season from an slice of teams
 func (m MatchServiceImp) ScheduleSeason(seasonName string) []model.Match {
-	fmt.Printf("Scheduling season: %s\n", seasonName)
+	log.Infof("Scheduling season: %s\n", seasonName)
 	teams := m.dataStore.GetTeams()
 	m.saveTeamSeasons(teams, seasonName)
 	matches := m.scheduleMatchUps(teams, seasonName)
@@ -26,7 +24,7 @@ func (m MatchServiceImp) ScheduleSeason(seasonName string) []model.Match {
 }
 
 func (m MatchServiceImp) saveTeamSeasons(teams []model.Team, season string) {
-	log.Println("Saving team seasons")
+	log.Info("Saving team seasons")
 	for i := range teams {
 		teamSeason := model.TeamSeason{}
 		teamSeason.Season = season

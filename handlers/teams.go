@@ -2,14 +2,14 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
+
+	log "github.com/sirupsen/logrus"
 )
 
 // GetTeams returns all teams from the database
 func (s SoccerSim) GetTeams(w http.ResponseWriter, r *http.Request) {
-	//TODO: Add logger
-	fmt.Println("Getting all teams")
+	log.Info("Getting all teams")
 	teams := s.TeamService.GetAllTeams()
 	// util.WriteToFile(teams)
 	setReturnDefaults(w)
