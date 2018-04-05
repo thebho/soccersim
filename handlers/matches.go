@@ -14,7 +14,6 @@ import (
 
 // ScheduleSeason returns all teams from the sdatabase
 func (s SoccerSim) ScheduleSeason(w http.ResponseWriter, r *http.Request) {
-	//TODO: Add logger
 	seasonName, err := util.ParseURL("season_name", r.URL.RequestURI())
 	util.CheckError(err)
 	log.Infof("Received Schedule Season request with name: %s", seasonName)
