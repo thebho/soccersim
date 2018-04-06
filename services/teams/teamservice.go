@@ -1,8 +1,6 @@
 package teams
 
 import (
-	"log"
-
 	"github.com/thebho/soccersim/model"
 )
 
@@ -41,6 +39,5 @@ func (t TeamServiceImp) GetTeamSeason(teamABV, season string) model.TeamSeason {
 
 // GetTeamSeasons all team seasons
 func (t TeamServiceImp) GetTeamSeasons(season string) []model.TeamSeasonJoin {
-	log.Println("Getting team seasons")
 	return t.dataStore.GetTeamSeasons(season)
 }
