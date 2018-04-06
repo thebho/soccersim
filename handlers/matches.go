@@ -43,6 +43,7 @@ func (s SoccerSim) SimWeeksMatches(w http.ResponseWriter, r *http.Request) {
 	err := decoder.Decode(&simWeekRequest)
 	util.CheckError(err)
 	defer r.Body.Close()
+	setReturnDefaults(w)
 	if simWeekRequest.Action == "simWeek" {
 		log.Infof("Sim weeks matches request for: %s/%d", simWeekRequest.SeasonName, simWeekRequest.Week)
 		s.MatchService.SimMatchWeek(simWeekRequest.SeasonName, simWeekRequest.Week)
